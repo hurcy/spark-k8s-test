@@ -1,0 +1,37 @@
+{
+    "name": "dl.s_acpprioe",
+    "mode": "full",
+    "dependency": [],
+    "target_storage": "hrs",
+    "workflow": [
+        {
+            "sql": "pg_cre_s_acpprioe.sql",
+            "operator": "PostgresOperator"
+        },
+        {
+            "sql": "truncate table dl.s_acpprioe",
+            "operator": "PostgresOperator"
+        },
+        {
+            "is_custom": false,
+            "operator": "SparkSubmitOperator",
+            "pool": "extract_pool",
+            "resource_type": "x-small",
+            "spark_config": {
+                "spark.driver.extraJavaOptions": "-Duser.timezone=ROK",
+                "spark.executor.extraJavaOptions": "-Duser.timezone=ROK"
+            },
+            "sparkflow": [
+                {
+                    "source_storage": "his",
+                    "is_meta_req": true,
+                    "is_load_cnt_req": true,
+                    "meta_table_nm": "dl.s_acpprioe",
+                    "sql": "full_ext_s_acpprioe.sql",
+                    "process": "write",
+                    "table_nm": "dl.S_ACPPRIOE"
+                }
+            ]
+        }
+    ]
+}

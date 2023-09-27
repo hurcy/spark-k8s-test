@@ -1,0 +1,103 @@
+data_layer:
+  # bind:
+  #   max_active_tasks: # (default: max_active_tasks_per_dag in airflow.cfg)
+  #   poke_interval: 20 # (default: 60)
+  #   # https://airflow.apache.org/docs/apache-airflow/1.10.10/concepts.html#trigger-rules (default: ALL_SUCCESS)
+  #   trigger_rule: # (default: ALL_SUCCESS)
+  #   load_cnt_object: spark # <spark | hrs>
+  dl:
+    max_active_tasks: 4
+    poke_interval: 20
+    # trigger_rule: ALL_DONE
+    trigger_rule: 
+    load_cnt_object: hrs
+  # dm:
+  #   max_active_tasks: 8
+  #   poke_interval: 30
+  #   trigger_rule:
+  #   load_cnt_object: hrs
+
+data_storage:
+  structured_data:
+    # object_storage:
+    # rdb connection should be registered in airflow connections
+    # the name of the connection should be {rdb_name}_conn
+    rdb:
+      oltp: 
+        oracle: [his]
+      olap: 
+        postgres: [hrs]
+  unstructured_data:
+    object_storage: 
+      # hdfs_csv: /user/HRS/prod/inc
+
+default_operator_conn:
+  postgres: hrs
+  oracle: ods
+
+spark_config:
+  jars: file:///home/airflow/.local/lib/python3.8/site-packages/dags_helper/utils/jars/*.jar
+  default:
+    # spark.driver.port: 31596
+    # spark.yarn.maxAppAttempts: 1
+    spark.sql.parquet.int96RebaseModeInWrite: CORRECTED
+    spark.sql.parquet.datetimeRebaseModeInWrite: CORRECTED
+    spark.sql.legacy.timeParserPolicy: LEGACY
+    spark.sql.session.timeZone: ROK
+    # spark.eventLog.enabled: True
+    # spark.eventLog.dir: hdfs:///tmp/spark-logs
+  queue:
+    standalone:
+      x-small:
+        spark.executor.instances: 1
+        spark.executor.memory: 1536m
+        spark.executor.memoryOverhead: 409m
+        spark.executor.cores: 1
+        spark.driver.memory: 1536m
+        spark.driver.memoryOverhead: 409m
+        spark.driver.cores: 1
+      small:
+        spark.executor.instances: 2
+        spark.executor.memory: 1536m
+        spark.executor.memoryOverhead: 409m
+        spark.executor.cores: 1
+        spark.driver.memory: 1536m
+        spark.driver.memoryOverhead: 409m
+        spark.driver.cores: 1
+      medium:
+        spark.executor.instances: 3
+        spark.executor.memory: 1536m
+        spark.executor.memoryOverhead: 409m
+        spark.executor.cores: 1
+        spark.driver.memory: 1536m
+        spark.driver.memoryOverhead: 409m
+        spark.driver.cores: 1
+      large:
+        spark.executor.instances: 4
+        spark.executor.memory: 1536m
+        spark.executor.memoryOverhead: 409m
+        spark.executor.cores: 1
+        spark.driver.memory: 1536m
+        spark.driver.memoryOverhead: 409m
+        spark.driver.cores: 1
+        spark.scheduler.minRegisteredResourcesRatio: 1.0
+        spark.scheduler.maxRegisteredResourcesWaitingTime: 300s
+      x-large:
+        spark.executor.instances: 5
+        spark.executor.memory: 1536m
+        spark.executor.memoryOverhead: 409m
+        spark.executor.cores: 1
+        spark.driver.memory: 1536m
+        spark.driver.memoryOverhead: 409m
+        spark.driver.cores: 1
+        spark.scheduler.minRegisteredResourcesRatio: 1.0
+        spark.scheduler.maxRegisteredResourcesWaitingTime: 600s
+
+cluster:
+  distributed_computing:
+    cluster_manager: STANDALONE
+    ip: 172.16.30.162
+    port: 8080
+    end_point: app/?appId=
+  airflow:
+    ip: 172.16.30.178

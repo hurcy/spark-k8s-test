@@ -1,0 +1,23 @@
+docker-compose.hrs_pipeline_dl_dw.yml
+#bind_workflow.json # uncomment if added
+dl_workflow.json
+dm_workflow.json
+logs/
+plugins/
+airflow.db
+airflow-webserver.pid
+.DS_Store
+__pycache__
+.env
+#.workflowignore
+.python-version
+profiles.yml
+
+#config.yml
+.dags
+.project
+.ipynb_checkpoints
+.vscode
+.venv
+.pytest_cache
+dags/tmp_dags
