@@ -4,4 +4,4 @@ spark-submit \
     --deploy-mode cluster \
     --name spark-pi \
     --conf spark.kubernetes.container.image=greyparrotkhc/spark:3.3.2-hadoop3 \
-    pi.py
+    dags/pi.py
