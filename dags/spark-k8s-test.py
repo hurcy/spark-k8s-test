@@ -33,7 +33,7 @@ with DAG(
           # "spark.cores.max": 1
       },
       name="pi_test",
-      application_args=[10]
+      application_args=["10"]
   )
   postgres_test = SparkSubmitOperator(
       application="/opt/airflow/dags/spark_app.py",
