@@ -20,7 +20,7 @@ with DAG(
 ) as dag:
   pi_test = SparkSubmitOperator(
       application="/opt/airflow/dags/pi.py",
-      conn_id="",
+      conn_id="spark_standalone",
       task_id="pi_test",
       conf={
           # "spark.eventLog.enabled": True,
@@ -37,7 +37,7 @@ with DAG(
   )
   postgres_test = SparkSubmitOperator(
       application="/opt/airflow/dags/spark_app.py",
-      conn_id="",
+      conn_id="spark_standalone",
       task_id='postgres_test',
       conf={
           # "spark.eventLog.enabled": True,
