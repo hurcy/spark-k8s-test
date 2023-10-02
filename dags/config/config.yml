@@ -96,8 +96,8 @@ spark_config:
 cluster:
   distributed_computing:
     cluster_manager: STANDALONE
-    ip: 172.16.30.162
-    port: 8080
+    ip: 172.22.249.22
+    port: 30001
     end_point: app/?appId=
   airflow:
-    ip: 172.16.30.178
+    ip: 172.22.249.48
