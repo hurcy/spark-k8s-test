@@ -40,7 +40,7 @@ if __name__ == "__main__":
   var = sys.argv[1]
   print(f"hello spark{var}!")
   execute(f"insert into dkuh_dm.ed_test values ({var})")
-  f = open('test.sql', 'r') 
+  f = open('file:///test.sql', 'r') 
   sql_text = f.read()
   print(sql_text)
   execute(sql_text)
