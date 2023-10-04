@@ -1,1 +1,1 @@
-test
+select 1
