@@ -20,6 +20,7 @@ with DAG(
 ) as dag:
   pi_test = SparkSubmitOperator(
       application="/opt/airflow/dags/repo/pi.py",
+      files="/opt/airflow/dags/repo/test.sql",
       conn_id="spark_standalone",
       task_id="pi_test",
       conf={
@@ -37,6 +38,7 @@ with DAG(
   )
   postgres_test = SparkSubmitOperator(
       application="/opt/airflow/dags/repo/spark_app.py",
+      files="/opt/airflow/dags/repo/test.sql",
       conn_id="spark_standalone",
       task_id='postgres_test',
       conf={
