@@ -4,6 +4,7 @@ import psycopg2
 import time
 
 from pyspark.sql import SparkSession
+import pyspark
 
 
 spark = (
@@ -40,7 +41,8 @@ if __name__ == "__main__":
   var = sys.argv[1]
   print(f"hello spark{var}!")
   execute(f"insert into dkuh_dm.ed_test values ({var})")
-  f = open('file:///test.sql', 'r') 
-  sql_text = f.read()
-  print(sql_text)
-  execute(sql_text)
+  file = pyspark.SparkFiles.get('test.sql')
+  with open(file) as f:
+    sql_text = "".join(f.readlines())
+    print(sql_text)
+    execute(sql_text)
